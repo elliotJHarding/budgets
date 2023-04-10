@@ -1,38 +1,98 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+:root  {
+    --title-fs: 2.6rem;
+    --font-family: 'Montserrat';
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input, button, .response {
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    border-color: rgba(0, 0, 0, 0.4);
+    border-style: solid;
+    border-width: 0.2rem;
+    font-family: 'Montserrat', sans-serif;
+
+    transition: border-color 0.5s ease
+    , border-radius 0.5s ease
+    , background-color 0.2s ease-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+
+.card {
+    background-color: var(--background);
+    padding: 2rem;
+    border-radius: var(--card-border-radius);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input:focus, button:focus {
+    border-radius: 20px;
+    border-color: var(--secondary);
+    outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    height: inherit;
+}
+
+html, body, #root, .App  {
+    height: 100%;
+    font-family: var(--font-family);
+}
+
+
+.align-center {
+    height: inherit;
+    align-items: center;
+}
+
+button {
+    background-color: var(--primary);
+
+}
+
+button:hover {
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.input-invalid {
+    border-color: var(--red);
+    color: var(--red)
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.neutral {
+    background-color: var(--background);
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+a {
+    text-decoration: none;
 }

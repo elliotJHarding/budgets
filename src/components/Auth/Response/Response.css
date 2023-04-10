@@ -1,0 +1,27 @@
+
+
+.response {
+    display: flex;
+    flex-direction: row;
+    border-radius: 30px;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+}
+
+.response.show {
+    opacity: 1;
+}
+
+.response img {
+    opacity: 0.5;
+    width: 32px;
+    height: 32px;
+}
+
+.response p {
+    margin: 0px 0 0 0;
+    align-content: center;
+    align-self: center;
+}

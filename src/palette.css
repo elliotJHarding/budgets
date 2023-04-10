@@ -1,0 +1,12 @@
+:root  {
+    --title-fs: 3rem;
+    --primary: #ebd2cc;
+    --secondary: #ae887f;
+    --tertiary: #a18f5c;
+    --neutral: #998e8c;
+    --white: #ffffff;
+    --background: rgba(155, 67, 44, 0.05);
+    --text-color: dimgrey;
+    --red: #880808;
+    --card-border-radius: 20px;
+}
