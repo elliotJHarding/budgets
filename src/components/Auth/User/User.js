@@ -9,6 +9,10 @@ import NavBar from "../../NavBar/NavBar";
 
 export default function User() {
     const {authContext, setAuthContext} = useContext(AuthContext);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+
     const navigate = useNavigate();
     const authorized = authContext.authorized();
     const token = authContext.token
@@ -23,7 +27,8 @@ export default function User() {
                }
            })
            .then((response) => {
-               console.log(response)
+                setFirstName(response.data.firstName)
+                setLastName(response.data.lastName)
            })
            .catch((error) => {
                console.log(error)
@@ -35,7 +40,7 @@ export default function User() {
         if (authorized) {
             getProfileData()
         } else {
-            console.log("not Authorized")
+            navigate('/login')
         }
     })
 
@@ -43,7 +48,7 @@ export default function User() {
 
     return (
         <div>
-            <h1>User</h1>
+            <h1>Hello {firstName} {lastName}</h1>
         </div>
     );
 }

@@ -9,7 +9,7 @@ function NavItem(props) {
                 {props.icon != undefined &&
                 <img src={`https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/${props.icon}/default/48px.svg`}/>
                 }
-                <p>{props.text}</p>
+                {props.text != undefined && <p>{props.text}</p>}
             </div>
         </Link>
 )

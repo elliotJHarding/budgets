@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import NavItem from "./NavItem";
 import NavMenu from "./NavMenu";
 import './Navbar.css'
+import {AuthContext} from "../Auth/AuthContext";
 
 export function NavBar() {
+    const {authContext, setAuthContext} = useContext(AuthContext);
+
     return (
         <div className="navbar">
             <div className="navbar__group navbar__brand">
@@ -15,10 +18,11 @@ export function NavBar() {
                     <NavItem link="/transactions" text="Transactions" icon="text_snippet"/>
                     <NavItem link="/reports" text="Reports" icon="calendar_month"/>
                     <div className="navbar__spacer"></div>
-                    <NavItem link="/login" text="Login" icon="person"/>
+                    {authContext.authorized() || <NavItem link="/login" text="Login" icon="person"/>}
+                    {authContext.authorized() && <NavItem link="/user" icon="person"/>}
+                    {authContext.authorized() && <NavItem icon="logout"/>}
                 </div>
             </div>
-            <NavMenu/>
 
         </div>
     )
