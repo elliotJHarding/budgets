@@ -2,6 +2,7 @@ import React, {Component, useContext, useEffect, useState} from "react";
 import './Transactions.css'
 import Transaction from "./Transaction";
 import { motion } from "framer-motion";
+import TransactionLink from "./TransactionLink";
 
 
 export default function TransactionList(props) {
@@ -11,7 +12,8 @@ export default function TransactionList(props) {
         let date = null;
         let month = null;
         for (let i = 0; i < transactionList.length; i++) {
-            if (transactionList[i].itemType != 'TRANSACTION') {
+            const excludeTypes = ['TRANSACTION', 'LINK']
+            if (!excludeTypes.includes(transactionList[i].itemType)) {
                 break;
             }
 
@@ -52,6 +54,8 @@ export default function TransactionList(props) {
                return(<DateHeader date={transactionItem.date}/>)
            case 'MONTH_HEADER':
                return(<MonthHeader month={transactionItem.month}/>)
+           case 'LINK':
+               return(<TransactionLink link={transactionItem}/>)
        }
 
     }

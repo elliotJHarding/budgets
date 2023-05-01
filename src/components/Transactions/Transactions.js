@@ -33,7 +33,16 @@ export default function Transactions(props) {
 
     const filterTransactions = (transactionList) => {
         let result = [];
-        result = transactionList.sort((a, b) => new Date(b.bookingDateTime).getTime() - new Date(a.bookingDateTime).getTime())
+        let links = transactionList.filter(transaction => transaction.itemType == 'LINK')
+        let linkedTransactions = []
+        links.forEach((link) => {
+            linkedTransactions.push(link.fromTransactionId)
+            linkedTransactions.push(link.toTransactionId)
+        })
+
+
+
+        result = result.concat(transactionList)
         result = result.filter(transaction => filter.activeAccounts.includes(transaction.accountId))
         result = result.filter(transaction => {
             switch (filter.inOut) {
@@ -51,6 +60,9 @@ export default function Transactions(props) {
                 (filter.value.max == null || transaction.value.amount < filter.value.max))
             { return true } else { return false}
         })
+        result = result.filter(transaction => !linkedTransactions.includes(transaction.transactionId))
+        result = result.concat(links);
+        result = result.sort((a, b) => new Date(b.bookingDateTime).getTime() - new Date(a.bookingDateTime).getTime())
         return result;
     }
 
@@ -61,7 +73,7 @@ export default function Transactions(props) {
                 { headers: { Authorization: `Token ${token}`}}
             )
             .then((response) => {
-                setTransactions(transformTransactionData(response.data.accounts))
+                setTransactions(transformTransactionData(response.data))
                 setAccounts(response.data.accounts)
                 setFilter({...filter, activeAccounts: response.data.accounts.map(account => account.accountId)})
             })
@@ -72,7 +84,7 @@ export default function Transactions(props) {
 
     const transformTransactionData = (transactionData) => {
         let transactions = []
-        transactionData.forEach((account) => {
+        transactionData.accounts.forEach((account) => {
             account.transactions.forEach((transaction) => {
                 transaction.itemType = 'TRANSACTION'
                 transaction.accountId = account.accountId
@@ -83,6 +95,12 @@ export default function Transactions(props) {
             })
            })
 
+        transactionData.links.forEach((link) => {
+            link.itemType = 'LINK'
+            link.from_logo = transactionData.accounts.find(account => account.accountId == link.fromAccountId).logo
+            link.to_logo = transactionData.accounts.find(account => account.accountId == link.toAccountId).logo
+            transactions.push(link)
+        })
         return transactions
     }
 
