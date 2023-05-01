@@ -1,0 +1,82 @@
+.accountList {
+    background-color: var(--background);
+    padding: 3rem;
+    display: flex;
+    gap: 1rem;
+    border-radius: var(--card-border-radius);
+    max-height: 80%;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.accountList-container {
+}
+
+.accountList p {
+    margin: 0;
+}
+
+.info img {
+    width: 50px;
+    height: 50px;
+}
+
+.account {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 1rem;
+    transition: background-color 200ms ease-out, outline-color 200ms ease-out;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+
+}
+
+.account:hover {
+    background-color: var(--primary);
+}
+
+.account .info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.account .details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-content: space-between;
+}
+
+.details p:first-child {
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.balance {
+    font-size: 20pt;
+    background-color: var(--primary);
+    border-radius: 1rem;
+    padding: 0.5rem
+}
+
+.account.disabled {
+    background-color: transparent;
+    outline: solid thin;
+    outline-color: var(--text-color);
+}
+
+.account.disabled img, .account.disabled div {
+    filter: grayscale(100%);
+}
+
+.accountCheck {
+    width: 32px;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    transition: opacity 200ms ease-in-out;
+}

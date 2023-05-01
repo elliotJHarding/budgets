@@ -5,6 +5,7 @@ import axios from "axios";
 import Response from "../Response/Response";
 import {Auth, AuthContext} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
+import {motion} from "framer-motion";
 
 export default function Login() {
     const {authContext, setAuthContext} = useContext(AuthContext);
@@ -32,6 +33,7 @@ export default function Login() {
                 }
             })
             .catch((error) => {
+                console.log(error)
                 if (error.code == "ERR_NETWORK") {
                     setResponse({
                         text: "Server Unavailable",
@@ -48,7 +50,7 @@ export default function Login() {
     }
 
     return (
-        <div className="auth-container">
+        <motion.div layout layoutId="page" className="auth-container">
             <div className="card card-auth">
                 <input type="text" value={username} onInput={e => setUsername(e.target.value)} placeholder="Username"/>
                 <input type="password" value={password} onInput={e => setPassword(e.target.value)} placeholder="Password"/>
@@ -58,6 +60,6 @@ export default function Login() {
                     <Response error={response.text} visible={response.visible}/>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

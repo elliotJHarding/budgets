@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 function NavItem(props) {
     return (
         <Link to={props.link} className="navbar__item">
-            <div>
+            <div onClick={props.action}>
                 {props.icon != undefined &&
                 <img src={`https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/${props.icon}/default/48px.svg`}/>
                 }

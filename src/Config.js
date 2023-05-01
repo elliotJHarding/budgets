@@ -7,5 +7,6 @@ Config.Endpoints.CreateUser = `${domain}/auth/createuser`
 Config.Endpoints.CSRF = `${domain}/auth/csrf`
 Config.Endpoints.ObtainToken = `${domain}/auth/token`
 Config.Endpoints.ProfileData = `${domain}/user`
+Config.Endpoints.Transactions = `${domain}/transactions`
 
 export default Config;

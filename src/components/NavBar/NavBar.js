@@ -2,10 +2,13 @@ import React, {useContext} from "react";
 import NavItem from "./NavItem";
 import NavMenu from "./NavMenu";
 import './Navbar.css'
-import {AuthContext} from "../Auth/AuthContext";
+import {Auth, AuthContext} from "../Auth/AuthContext";
+import {useNavigate} from "react-router-dom";
 
 export function NavBar() {
     const {authContext, setAuthContext} = useContext(AuthContext);
+    const navigate = useNavigate();
+
 
     return (
         <div className="navbar">
@@ -20,7 +23,7 @@ export function NavBar() {
                     <div className="navbar__spacer"></div>
                     {authContext.authorized() || <NavItem link="/login" text="Login" icon="person"/>}
                     {authContext.authorized() && <NavItem link="/user" icon="person"/>}
-                    {authContext.authorized() && <NavItem icon="logout"/>}
+                    {authContext.authorized() && <NavItem icon="logout" action={() => {authContext.logout()}}/>}
                 </div>
             </div>
 

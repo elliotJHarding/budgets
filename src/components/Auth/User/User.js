@@ -44,8 +44,6 @@ export default function User() {
         }
     })
 
-
-
     return (
         <div>
             <h1>Hello {firstName} {lastName}</h1>

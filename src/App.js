@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import User from "./components/Auth/User/User";
 import Root from "./Root";
+import Transactions from "./components/Transactions/Transactions";
+import Reports from "./components/Reports/Reports";
 
 export default App;
 
@@ -21,7 +23,9 @@ function App() {
         { path: "/", element: <Root/>, children: [
             { path: "/login", element: <Login/> },
             { path: "/signup", element: <Signup/> },
-            { path: "/user", element: <User/>}
+            { path: "/user", element: <User/>},
+                {path: "/transactions", element: <Transactions/>},
+                {path: "/reports", element: <Reports/>}
         ]}
     ])
 

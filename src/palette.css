@@ -5,8 +5,10 @@
     --tertiary: #a18f5c;
     --neutral: #998e8c;
     --white: #ffffff;
-    --background: rgba(155, 67, 44, 0.05);
+    --background: #f8f3f2;
     --text-color: dimgrey;
     --red: #880808;
     --card-border-radius: 20px;
+    --positive: rgba(119, 221, 119, 0.6);
+    --negative: rgba(255, 105, 97, 0.6);
 }

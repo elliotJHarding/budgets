@@ -19,6 +19,13 @@ export class Auth {
       return (! (this.token == null));
    }
 
+   logout() {
+      const cookies = new Cookies();
+      this.token = null;
+      cookies.remove('auth');
+      console.log('logout')
+   }
+
 
 }
 

@@ -52,6 +52,7 @@ input:focus, button:focus {
 html, body, #root, .App  {
     height: 100%;
     font-family: var(--font-family);
+    overflow: hidden;
 }
 
 
@@ -66,7 +67,7 @@ button {
 }
 
 button:hover {
-    background-color: var(--secondary);
+    background-color: var(--secondary) !important;
     cursor: pointer;
 }
 
@@ -79,6 +80,10 @@ button:hover {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+}
+
+.primary {
+    background-color: var(--primary) !important;
 }
 
 .neutral {
@@ -95,4 +100,12 @@ button:hover {
 
 a {
     text-decoration: none;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+.opaque {
+    opacity: 1;
 }
