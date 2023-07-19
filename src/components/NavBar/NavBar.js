@@ -13,7 +13,7 @@ export function NavBar() {
     return (
         <div className="navbar">
             <div className="navbar__group navbar__brand">
-                <img className="navbar__logo" src="https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/account_balance_wallet/default/48px.svg"/>
+                <span className="navbar__logo material-symbols-outlined">account_balance_wallet</span>
                 <h1 className="navbar__title">Finances</h1>
             </div>
             <div className="navbar__links">

@@ -7,15 +7,18 @@ import TransactionList from "./TransactionList";
 import {useNavigate} from "react-router-dom";
 import AccountList from "../Accounts/AccountList";
 import TransactionFilter from "./TransactionFilter";
+import Tags from "./Tags";
 
-export const FilterContext = createContext()
+export const FilterContext = createContext();
+export const TagContext = createContext();
+export const TransactionsContext = createContext();
 
 export default function Transactions(props) {
     const {authContext, setAuthContext} = useContext(AuthContext);
 
     const [transactions, setTransactions] = useState([]);
-
     const [accounts, setAccounts] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     const [filter, setFilter] = useState({
         value: {
@@ -24,6 +27,12 @@ export default function Transactions(props) {
         },
         activeAccounts: [],
         inOut: 0
+    })
+
+    const [tagContext, setTagContext] = useState({
+        filter: '',
+        tags: [],
+        selectedTransaction: null
     })
 
     const navigate = useNavigate();
@@ -40,10 +49,12 @@ export default function Transactions(props) {
             linkedTransactions.push(link.toTransactionId)
         })
 
-
-
         result = result.concat(transactionList)
-        result = result.filter(transaction => filter.activeAccounts.includes(transaction.accountId))
+
+        if (filter.activeAccounts.length > 0) {
+            result = result.filter(transaction => filter.activeAccounts.includes(transaction.accountId))
+        }
+
         result = result.filter(transaction => {
             switch (filter.inOut) {
                 case 0:
@@ -61,7 +72,6 @@ export default function Transactions(props) {
             { return true } else { return false}
         })
         result = result.filter(transaction => !linkedTransactions.includes(transaction.transactionId))
-        result = result.concat(links);
         result = result.sort((a, b) => new Date(b.bookingDateTime).getTime() - new Date(a.bookingDateTime).getTime())
         return result;
     }
@@ -69,13 +79,13 @@ export default function Transactions(props) {
     const getTransactionData = async () => {
         axios
             .get(
-                Config.Endpoints.Transactions,
+                Config.Endpoints.Transactions.get,
                 { headers: { Authorization: `Token ${token}`}}
             )
             .then((response) => {
                 setTransactions(transformTransactionData(response.data))
                 setAccounts(response.data.accounts)
-                setFilter({...filter, activeAccounts: response.data.accounts.map(account => account.accountId)})
+                setLoading(false)
             })
             .catch((error) => {
                 console.log(error)
@@ -101,6 +111,9 @@ export default function Transactions(props) {
             link.to_logo = transactionData.accounts.find(account => account.accountId == link.toAccountId).logo
             transactions.push(link)
         })
+
+        setTagContext({...tagContext, tags: transactionData.tags})
+
         return transactions
     }
 
@@ -115,11 +128,18 @@ export default function Transactions(props) {
     return (
        <div className="page transactions">
            <FilterContext.Provider value={{filter, setFilter}}>
-               <div className="filters">
-                   <AccountList accounts={accounts} />
-                   <TransactionFilter/>
-               </div>
-               <TransactionList transactions={filterTransactions(transactions)}/>
+               <TagContext.Provider value={{tagContext, setTagContext}}>
+                   <TransactionsContext.Provider value={{transactions, setTransactions}}>
+                       <div className="filters">
+                           <AccountList loading={loading} accounts={accounts} />
+                           <Tags/>
+                       </div>
+                       <div className="filters">
+                           <TransactionFilter/>
+                           <TransactionList loading={loading} transactions={filterTransactions(transactions)}/>
+                       </div>
+                   </TransactionsContext.Provider>
+               </TagContext.Provider>
            </FilterContext.Provider>
        </div>
     )

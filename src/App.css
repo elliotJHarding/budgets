@@ -11,8 +11,8 @@ input, button, .response {
     padding: 0.8rem;
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--text-color);
-    border-color: rgba(0, 0, 0, 0.4);
+    color: var(--contrast);
+    border-color: var(--contrast);
     border-style: solid;
     border-width: 0.2rem;
     font-family: 'Montserrat', sans-serif;
@@ -36,6 +36,10 @@ input:focus, button:focus {
     outline: none;
 }
 
+html {
+    height: 97vh;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -46,13 +50,15 @@ input:focus, button:focus {
     display: flex;
     justify-content: center;
     flex-grow: 1;
-    height: inherit;
+    max-height: 100%;
+    overflow: hidden;
+    background-color: var(--backdrop);
 }
 
-html, body, #root, .App  {
+#root, .App, body  {
     height: 100%;
     font-family: var(--font-family);
-    overflow: hidden;
+    color: var(--contrast)
 }
 
 
@@ -63,6 +69,7 @@ html, body, #root, .App  {
 
 button {
     background-color: var(--primary);
+    color: var(--contrast)
 
 }
 
@@ -94,9 +101,7 @@ button:hover {
     visibility: visible;
 }
 
-.hidden {
-    visibility: hidden;
-}
+
 
 a {
     text-decoration: none;
@@ -108,4 +113,53 @@ a {
 
 .opaque {
     opacity: 1;
+}
+
+.modal__background {
+    backdrop-filter: blur(10px);
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 200ms ease-in-out;
+}
+
+.modal {
+    background-color: var(--background);
+    padding: 3rem;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+    border-radius: var(--card-border-radius);
+    opacity: 1;
+
+    transition: opacity 200ms ease-in-out;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.icon {
+    fill: var(--contrast);
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    align-items: center;
+}
+
+div::-webkit-scrollbar {
+    display: none;
+}
+
+.loader {
+    opacity: 0.5;
+    margin: 1rem;
 }

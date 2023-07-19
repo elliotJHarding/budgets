@@ -1,0 +1,141 @@
+
+.tagList > .tag {
+    background-color: var(--backdrop);
+    display: flex;
+    border-radius: 10px;
+
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    font-size: 15pt;
+}
+
+.tagList::-webkit-scrollbar {
+    display: none;
+}
+
+.tag div.parent {
+    display: flex;
+    gap: 1rem;
+    font-size: 15pt;
+    align-items: center;
+}
+
+.tag img {
+    opacity: 0.7;
+}
+
+.tag {
+    transition: background-color 200ms ease-out;
+}
+
+.tag:hover .parent p {
+   color: var(--contrast-inverted);
+}
+
+.tag:hover .parent img {
+    filter: invert(1);
+}
+
+.childTag {
+    display: flex;
+    margin-left: 1rem;
+    gap: 1rem;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 12pt;
+    transition: background-color 200ms ease-in-out;
+}
+
+.childTag:hover {
+    background-color: var(--tertiary);
+}
+
+.childTag:hover img {
+    filter: invert(1);
+}
+
+.childTag:hover p {
+    color: var(--contrast-inverted)
+}
+
+.tag img {
+    height: 32px;
+}
+
+.tag p {
+    margin: 0;
+}
+
+.tag:hover {
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.tagList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: scroll;
+
+}
+
+.search--container {
+    display: flex;
+    gap: 1rem;
+}
+
+.search--container .icon-container {
+    border-radius: 5px;
+    background-color: var(--primary);
+    padding: 0 0.5rem;
+    display: flex;
+}
+
+.search--container .icon {
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+    font-size: 3em !important;
+    line-height: 1.2;
+}
+
+.search--container input {
+    flex-grow: 1;
+}
+
+.tagCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 2;
+    min-height: 0;
+
+}
+
+.childTags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tagChip {
+    display: flex;
+    background-color: var(--primary);
+    border-radius: 10px;
+    padding: 1px 0.5rem 1px 0.5rem;
+    align-items: center;
+
+    transition: background-color 200ms ease-out;
+}
+
+.tagChip p {
+    font-weight: bolder;
+}
+
+.tagChip img {
+    width: 30px;
+    height: 30px;
+    opacity: 0.6;
+}

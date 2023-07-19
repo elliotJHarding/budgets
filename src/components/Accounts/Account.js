@@ -4,22 +4,20 @@ import {FilterContext} from "../Transactions/Transactions";
 
 
 export default function Account(props) {
-    const [disabled, setDisabled] = useState(false)
-
     const {filter, setFilter} = useContext(FilterContext)
 
+    const isDisabled = () => !filter.activeAccounts.includes(props.account.accountId) && filter.activeAccounts.length > 0;
+
     const accountOnClick = (event) => {
-        if (disabled) {
+        if (!filter.activeAccounts.includes(props.account.accountId)) {
             setFilter({...filter, activeAccounts: filter.activeAccounts.concat([props.account.accountId])})
         } else {
-           setFilter({...filter, activeAccounts: filter.activeAccounts.filter(accountId => accountId != props.account.accountId)})
+            setFilter({...filter, activeAccounts: filter.activeAccounts.filter(accountId => accountId != props.account.accountId)})
         }
-        setDisabled(!disabled)
-
     }
 
     return (
-        <div className={`account ${disabled ? 'disabled': ''}`} onClick={accountOnClick}>
+        <div className={`account ${isDisabled() ? 'disabled': ''}`} onClick={accountOnClick}>
             <div className="info">
                 <img src={props.account.logo}/>
                 <div className="details">

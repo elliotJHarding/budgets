@@ -7,7 +7,7 @@ function NavItem(props) {
         <Link to={props.link} className="navbar__item">
             <div onClick={props.action}>
                 {props.icon != undefined &&
-                <img src={`https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/${props.icon}/default/48px.svg`}/>
+                    <span className="icon material-symbols-outlined">{props.icon}</span>
                 }
                 {props.text != undefined && <p>{props.text}</p>}
             </div>

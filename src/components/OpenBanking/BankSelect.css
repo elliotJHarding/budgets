@@ -1,0 +1,43 @@
+.bank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: 1rem;
+    min-width: 1000px;
+    max-height: 95%;
+    overflow: scroll;
+
+}
+
+.bank {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+    transition: background-color 200ms ease-out;
+}
+
+.bank img {
+    max-width: 100px;
+    border-radius: var(--card-border-radius);
+    background-color: white;
+}
+
+.bank p {
+    font-size: 14pt;
+    font-weight: bolder;
+    margin: 0;
+    text-align: center;
+}
+
+.bank.selected {
+    background-color: var(--secondary);
+    color: var(--contrast-inverted);
+}
+
+.row img.logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+}

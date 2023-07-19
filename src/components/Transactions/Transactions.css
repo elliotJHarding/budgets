@@ -1,6 +1,6 @@
 
 .page.transactions {
-    padding-top: 3rem;
+    margin-top: 3rem;
     display: flex;
     gap: 1rem;
     justify-content: space-evenly;
@@ -15,6 +15,7 @@
     position: relative;
     max-height: 100%;
     border-radius: 20px;
+    padding: 0 2px;
 }
 
 
@@ -23,9 +24,25 @@
     background-color: var(--background);
     border-radius: var(--card-border-radius);
     padding: 1rem 3rem;
-    max-height: 85%;
+    min-height: 0;
 }
 
+.transaction.selected {
+    background-color: var(--primary);
+    outline: var(--secondary) solid 2px;
+}
+
+.transaction.selected .tagChip {
+    background-color: var(--secondary);
+}
+
+.transaction.selected .tagChip p {
+    color: var(--contrast-inverted)
+}
+
+.transaction.selected .tagChip img {
+    filter: invert(1);
+}
 
 .transactionList::-webkit-scrollbar {
   display: none;
@@ -34,11 +51,10 @@
 
 .transaction {
     display: flex;
-    background-color: white;
+    background-color: var(--backdrop);
     padding: 0.5rem;
     border-radius: 10px;
     transition: background-color 200ms ease-out , width 200ms ease-in-out;
-
 }
 
 .transaction:hover {
@@ -47,6 +63,11 @@
 
 .transaction img {
     height: 36px;
+}
+
+.transaction .logo {
+    border-radius: 10px;
+    background-color: white;
 }
 
 .transaction p {
@@ -102,11 +123,11 @@ p.sign {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    height: 100%
 }
 
 .transactionFilters {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
 }
 
@@ -128,4 +149,44 @@ p.sign {
 .inOutFilter button {
     width: 5rem;
     background-color: var(--background);
+}
+
+.untaggedFilter button div {
+    display: flex;
+    gap: 0.5rem;
+    align-content: center;
+}
+
+.untaggedFilter span {
+}
+
+
+
+.untaggedFilter p {
+    margin: 0;
+}
+
+.tagButton {
+    background-color: var(--primary);
+    border-radius: 5px;
+    display: flex;
+    padding: 0 0.5rem;
+    opacity: 0;
+    transition: opacity 200ms ease-out, background-color 200ms ease-out;
+}
+
+.transaction:hover .tagButton {
+    opacity: 1;
+}
+
+.tagButton:hover {
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.tagButton img {
+    width: 32px;
+    opacity: 0.5;
+    justify-content: center;
+    align-items: center;
 }

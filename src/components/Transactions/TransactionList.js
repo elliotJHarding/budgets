@@ -1,5 +1,6 @@
 import React, {Component, useContext, useEffect, useState} from "react";
 import './Transactions.css'
+import {BarLoader} from "react-spinners";
 import Transaction from "./Transaction";
 import { motion } from "framer-motion";
 import TransactionLink from "./TransactionLink";
@@ -64,7 +65,8 @@ export default function TransactionList(props) {
     return (
         <motion.div layout="position" className="transactionList-container">
             { transactionItems.length > 0 && <div className="transactionList">{transactionItems}</div> }
-            { transactionItems.length == 0 && <p className="noTransactions">No matching transactions...</p> }
+            { transactionItems.length == 0 && !props.loading && <p className="noTransactions">No matching transactions...</p> }
+            { props.loading && <BarLoader className="loader" loading={props.loading}/>}
         </motion.div>
     )
 }

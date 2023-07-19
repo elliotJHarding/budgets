@@ -43,6 +43,7 @@
     max-width: 64px;
     opacity: 0.7;
     width: 3.5rem;
+    font-size: 4em !important;
 
 }
 
@@ -55,7 +56,7 @@
 .navbar__title {
     margin: 0 0 0 1rem;
     font-size: var(--title-fs);
-    color: var(--text-color);
+    color: var(--contrast);
     white-space: normal;
     white-space: nowrap;
 }
@@ -82,16 +83,15 @@
 }
 
 .navbar__item span {
-    margin-right: 0.5rem;
     font-size: 2rem;
-    color: var(--text-color);
+    color: var(--contrast);
 }
 
 .navbar__item p {
     margin: 0 0 0 0;
     font-size: 1.3rem;
     font-family: 'Montserrat', sans-serif;
-    color: var(--text-color);
+    color: var(--contrast);
     font-weight: bold;
 }
 
@@ -109,7 +109,7 @@
 
 .navbar__menu__button span{
     font-size: 2rem;
-    color: var(--text-color);
+    color: var(--contrast);
 }
 
 @media(max-width: 40em) {
@@ -143,7 +143,7 @@
     .navbar__links .navbar__group {
         justify-content: center;
         /*box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.1);*/
-        border-top: var(--text-color) solid 3px;
+        border-top: var(--contrast) solid 3px;
     }
 
     .navbar__brand, .navbar__menu {
@@ -155,7 +155,7 @@
     }
 }
 
-.navbar__item img {
-    opacity: 0.6;
-    width: 2.5rem;
+.navbar__item .icon {
+
+    font-size: 2.5em !important;
 }

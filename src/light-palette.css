@@ -1,0 +1,16 @@
+:root  {
+    --title-fs: 3rem;
+    --primary: #ebd2cc;
+    --secondary: #A76571;
+    --tertiary: #a18f5c;
+    --neutral: #998e8c;
+    --white: #ffffff;
+    --background: #f8f3f2;
+    --backdrop: #FEFEFE;
+    --contrast: dimgrey;
+    --contrast-inverted: white;
+    --red: #880808;
+    --card-border-radius: 20px;
+    --positive: rgba(119, 221, 119, 0.6);
+    --negative: rgba(255, 105, 97, 0.6);
+}

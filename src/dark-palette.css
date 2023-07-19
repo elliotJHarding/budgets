@@ -1,14 +1,15 @@
 :root  {
     --title-fs: 3rem;
-    --primary: #ebd2cc;
-    --secondary: #ae887f;
+    --primary: #0E8388;
+    --secondary: #CBE4DE;
     --tertiary: #a18f5c;
     --neutral: #998e8c;
-    --white: #ffffff;
-    --background: #f8f3f2;
-    --text-color: dimgrey;
+    --white: #000000;
+    --background: #2E4F4F;
+    --contrast: white;
     --red: #880808;
     --card-border-radius: 20px;
     --positive: rgba(119, 221, 119, 0.6);
     --negative: rgba(255, 105, 97, 0.6);
+    --backdrop: #2C3333;
 }

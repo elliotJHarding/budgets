@@ -26,6 +26,14 @@ export class Auth {
       console.log('logout')
    }
 
+   header() {
+      return(
+         {
+            Authorization: `Token ${this.token}`
+         }
+      );
+   }
+
 
 }
 

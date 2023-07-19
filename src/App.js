@@ -1,5 +1,5 @@
 import './App.css';
-import './palette.css';
+import './light-palette.css';
 import React, {useEffect, useState} from "react";
 import Login from './components/Auth/Login/Login'
 import Signup from "./components/Auth/Signup/Signup";
@@ -14,6 +14,7 @@ import User from "./components/Auth/User/User";
 import Root from "./Root";
 import Transactions from "./components/Transactions/Transactions";
 import Reports from "./components/Reports/Reports";
+import BankSelect from "./components/OpenBanking/BankSelect";
 
 export default App;
 
@@ -25,7 +26,8 @@ function App() {
             { path: "/signup", element: <Signup/> },
             { path: "/user", element: <User/>},
                 {path: "/transactions", element: <Transactions/>},
-                {path: "/reports", element: <Reports/>}
+                {path: "/reports", element: <Reports/>},
+                {path: "/bankselect", element: <BankSelect/>}
         ]}
     ])
 
