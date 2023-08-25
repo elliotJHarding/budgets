@@ -104,7 +104,7 @@ export default function User() {
     return (
         <div>
             <h1>Hello {firstName} {lastName}</h1>
-            <LinkedAccountList accounts={linkedAccounts}/>
+            <LinkedAccountList accounts={linkedAccounts} updateAction={updateAccounts}/>
         </div>
     );
 }

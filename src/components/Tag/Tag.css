@@ -1,4 +1,16 @@
 
+.page.tags {
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.page.tags .card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .tagList > .tag {
     background-color: var(--backdrop);
     display: flex;
@@ -9,6 +21,30 @@
     font-size: 15pt;
 }
 
+.tagList > .tag button {
+    background-color: transparent;
+    border: none;
+    opacity: 0;
+    transition: opacity 200ms ease-out, background-color 200ms ease-in-out, color 200ms ease-in-out;
+    color: var(--contrast-inverted);
+}
+
+.tagList > .tag button:hover {
+    color: var(--contrast);
+    background-color: var(--primary) ;
+}
+
+button.delete {
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+}
+
+
+.tagList > .tag:hover button {
+    opacity: 1;
+}
+
 .tagList::-webkit-scrollbar {
     display: none;
 }
@@ -17,7 +53,9 @@
     display: flex;
     gap: 1rem;
     font-size: 15pt;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
 }
 
 .tag img {
@@ -26,6 +64,10 @@
 
 .tag {
     transition: background-color 200ms ease-out;
+}
+
+.tag .parent input {
+    max-width: 7.5rem;
 }
 
 .tag:hover .parent p {
@@ -96,7 +138,7 @@
 .search--container .icon {
     justify-content: center;
     align-items: center;
-    opacity: 0.5;
+    opacity: 0.8;
     font-size: 3em !important;
     line-height: 1.2;
 }
@@ -138,4 +180,60 @@
     width: 30px;
     height: 30px;
     opacity: 0.6;
+}
+
+.newTag button {
+    padding: 0 1rem;
+}
+
+.tagHeader {
+    display: flex;
+    gap: 1rem;
+    padding:1rem;
+    align-items: center;
+    border-radius: 20px;
+    flex-direction: row !important;
+}
+
+.tagHeader img {
+    opacity: 0.55555;
+}
+
+h1 {
+    margin: 0;
+}
+
+.tagDetails {
+    display: flex;
+    gap: 1rem;
+}
+
+h2 {
+    margin: 0;
+}
+
+.tag div.parent button.edit {
+    background-color: var(--primary);
+    color: var(--contrast);
+    opacity: 1;
+}
+
+.tag div.parent button.edit:hover {
+    background-color: var(--tertiary);
+    color: var(--contrast-inverted);
+    opacity: 1;
+}
+
+.tagHeader button span {
+    font-size: 24pt;
+}
+
+.rule {
+    background-color: var(--backdrop);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.rule p {
+    margin: 0;
 }

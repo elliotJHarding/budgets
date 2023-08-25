@@ -47,7 +47,7 @@ export default function TransactionList(props) {
         return result
     }
 
-    const transactionItems = addDateItems(props.transactions).map(transactionItem => {
+    const transactionItems =  addDateItems(props.transactions).map(transactionItem => {
        switch (transactionItem.itemType) {
            case 'TRANSACTION':
                return(<Transaction transaction={transactionItem}/>)

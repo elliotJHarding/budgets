@@ -1,6 +1,5 @@
 
 .page.transactions {
-    margin-top: 3rem;
     display: flex;
     gap: 1rem;
     justify-content: space-evenly;
@@ -96,6 +95,7 @@ p.sign {
 
 .spacer {
     flex-grow: 1;
+    min-width: 1px;
 }
 
 .month-header {
@@ -189,4 +189,9 @@ p.sign {
     opacity: 0.5;
     justify-content: center;
     align-items: center;
+}
+
+.transaction-search {
+    border-radius: var(--card-border-radius);
+    padding: 1rem;
 }

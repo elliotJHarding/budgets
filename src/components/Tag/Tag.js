@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import '../Transactions/Transactions.css'
 import {motion} from "framer-motion";
-import {TagContext, TransactionsContext} from "../Transactions/Transactions";
+import {FilterContext, TagContext, TransactionsContext} from "../Transactions/Transactions";
 import axios from "axios";
 import Config from "../../Config";
 import {AuthContext} from "../Auth/AuthContext";
@@ -39,6 +39,7 @@ export default function Tag(props) {
     const {tagContext, setTagContext} = useContext(TagContext)
     const {authContext, setAuthContext} = useContext(AuthContext)
     const {transactions, setTransactions} = useContext(TransactionsContext)
+    const {filter, setFilter} = useContext(FilterContext)
 
     const tag_icon = "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/label/default/48px.svg"
     if (props.tag == undefined) {
@@ -51,7 +52,8 @@ export default function Tag(props) {
             <div className="tagChip" onClick={() => {
                 removeTag(authContext.token, props.transactionId)
                 setTransactions(updateTransaction(transactions, props.transactionId))
-            }}>
+            }}
+            >
                <img src={props.tag.icon}/>
                 <p>{props.tag.name}</p>
             </div>

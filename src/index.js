@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './themes/light.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const darkModeEnabled = false
+
 root.render(
   <React.StrictMode>
       <head>
-          <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+          <link rel="stylesheet" href={`/themes/${darkModeEnabled ? 'dark' : 'light'}.css`}/>
       </head>
       <App />
   </React.StrictMode>

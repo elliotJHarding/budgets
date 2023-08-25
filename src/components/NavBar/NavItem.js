@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 function NavItem(props) {
     return (
-        <Link to={props.link} className="navbar__item">
+        <Link to={props.link} className="navbar__item hover">
             <div onClick={props.action}>
                 {props.icon != undefined &&
                     <span className="icon material-symbols-outlined">{props.icon}</span>

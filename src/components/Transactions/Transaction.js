@@ -8,6 +8,7 @@ import {TagContext} from "./Transactions";
 export default function Transaction(props) {
 
     const {tagContext, setTagContext} = useContext(TagContext);
+
     return (
         <div key={props.transaction.transactionId} className={`transaction ${tagContext.selectedTransaction == props.transaction.transactionId ? 'selected' : ''}`} onClick={() => {setTagContext({...tagContext, selectedTransaction: props.transaction.transactionId})}}>
             <img className="logo" src={props.transaction.logo}/>

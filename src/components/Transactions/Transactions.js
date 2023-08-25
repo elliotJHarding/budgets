@@ -7,7 +7,7 @@ import TransactionList from "./TransactionList";
 import {useNavigate} from "react-router-dom";
 import AccountList from "../Accounts/AccountList";
 import TransactionFilter from "./TransactionFilter";
-import Tags from "./Tags";
+import Tags from "../Tag/Tags";
 
 export const FilterContext = createContext();
 export const TagContext = createContext();
@@ -21,6 +21,7 @@ export default function Transactions(props) {
     const [loading, setLoading] = useState(true)
 
     const [filter, setFilter] = useState({
+        reference: '',
         value: {
             min: null,
             max: null,
@@ -53,6 +54,10 @@ export default function Transactions(props) {
 
         if (filter.activeAccounts.length > 0) {
             result = result.filter(transaction => filter.activeAccounts.includes(transaction.accountId))
+        }
+
+        if (filter.reference != '') {
+            result = result.filter(transaction => transaction.reference.includes(filter.reference))
         }
 
         result = result.filter(transaction => {
@@ -136,6 +141,7 @@ export default function Transactions(props) {
                        </div>
                        <div className="filters">
                            <TransactionFilter/>
+                           <input placeholder="Search Transactions" className="transaction-search" onChange={e => setFilter({...filter, reference: e.target.value})}/>
                            <TransactionList loading={loading} transactions={filterTransactions(transactions)}/>
                        </div>
                    </TransactionsContext.Provider>

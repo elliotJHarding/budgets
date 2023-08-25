@@ -7,7 +7,7 @@ import {BarLoader} from "react-spinners";
 export default function AccountList(props) {
 
     const accountItems = props.accounts.map((account) => {
-        return (<Account account={account}/>)
+        return (<Account key={account.id} account={account}/>)
     })
 
     return (

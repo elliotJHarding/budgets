@@ -12,6 +12,10 @@ Config.Endpoints.Transactions = {}
 Config.Endpoints.Transactions.get = `${domain}/transactions`
 Config.Endpoints.Transactions.tag = `${domain}/transactions/tag`
 
+Config.Endpoints.Tags = `${domain}/tags`
+
+Config.Endpoints.Rules = `${domain}/rules`
+
 Config.Endpoints.Banks = `${domain}/institutions`
 
 Config.Endpoints.Requisition = `${domain}/requisition`

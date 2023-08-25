@@ -4,7 +4,6 @@
     display: flex;
     gap: 1rem;
     border-radius: var(--card-border-radius);
-    max-height: 80%;
     flex-wrap: wrap;
     flex-direction: column;
 }
