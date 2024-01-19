@@ -23,6 +23,7 @@
     background-color: var(--background);
     border-radius: var(--card-border-radius);
     padding: 1rem 3rem;
+    position: relative;
     min-height: 0;
 }
 
@@ -102,6 +103,19 @@ p.sign {
     position: sticky;
     top: 0;
     background-color: var(--background);
+    z-index: 10;
+}
+
+.month-header:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2em;
+    left: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to bottom, var(--negative), rgba(255,255,255,0),  90%);
+    width: 100%;
+    height: 2em;
 }
 
 .month-header p {
@@ -195,3 +209,13 @@ p.sign {
     border-radius: var(--card-border-radius);
     padding: 1rem;
 }
+
+.trans-actions {
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    margin-right: 3rem;
+    margin-top: 0.5rem;
+}
+
+

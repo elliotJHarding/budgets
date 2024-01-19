@@ -3,21 +3,32 @@ import './Transactions.css'
 import {motion} from "framer-motion";
 import Tag from "../Tag/Tag";
 import {TagContext} from "./Transactions";
+import Icon from "../Common/Icon";
 
 
-export default function Transaction(props) {
+export default function Transaction({transaction}) {
 
     const {tagContext, setTagContext} = useContext(TagContext);
 
+    const select = () => {
+        let transactionSelected = tagContext.selectedTransactions.includes(transaction.transactionId)
+        if (transactionSelected) {
+            setTagContext({...tagContext, selectedTransactions: tagContext.selectedTransactions.filter(id => id !== transaction.transactionId)})
+        } else {
+            setTagContext({...tagContext, selectedTransactions: tagContext.selectedTransactions.concat(transaction.transactionId)})
+        }
+    }
+
     return (
-        <div key={props.transaction.transactionId} className={`transaction ${tagContext.selectedTransaction == props.transaction.transactionId ? 'selected' : ''}`} onClick={() => {setTagContext({...tagContext, selectedTransaction: props.transaction.transactionId})}}>
-            <img className="logo" src={props.transaction.logo}/>
-            <p>{props.transaction.reference}</p>
-            {/*<p>{props.transaction.bookingDateTime}</p>*/}
+        <div key={transaction.transactionId} className={`transaction ${tagContext.selectedTransactions.includes(transaction.transactionId) ? 'selected' : ''}`} onClick={select}>
+            <img className="logo" src={transaction.logo}/>
+            <p>{transaction.reference}</p>
+            {/*<p>{transaction.bookingDateTime}</p>*/}
             <div className="spacer"></div>
-            <Tag tag={props.transaction.tag} transactionId={props.transaction.transactionId}/>
-            <p className='sign'>{parseFloat(props.transaction.value.amount) > 0 ? '+': '-'}</p>
-            <p className={`value ${props.transaction.value.amount > 0 ? 'positive': 'negative'}`}>{`£${Math.abs(props.transaction.value.amount).toFixed(2)}`}</p>
+            {transaction.holiday != null && <div className="tagChip holiday"><Icon name="travel"/><p>{transaction.holiday.name}</p></div>}
+            <Tag tag={transaction.tag} transactionId={transaction.transactionId}/>
+            <p className='sign'>{parseFloat(transaction.value.amount) > 0 ? '+': '-'}</p>
+            <p className={`value ${transaction.value.amount > 0 ? 'positive': 'negative'}`}>{`£${Math.abs(transaction.value.amount).toFixed(2)}`}</p>
         </div>
     )
 }

@@ -5,20 +5,25 @@ import {TagContext, TransactionsContext} from "../Transactions/Transactions";
 import RuleList from "./RuleList";
 import TransactionList from "../Transactions/TransactionList";
 import {motion} from "framer-motion";
-import axios from "axios";
-import Config from "../../Config";
 import {AuthContext} from "../Auth/AuthContext";
+import Modal from "../Common/Modal";
+import {Repository} from "../../Repository";
 
-export default function TagDetails({tag, setTag}) {
+export default function TagDetails({tag, setTag, categories}) {
     const {authContext, setAuthContext} = useContext(AuthContext);
 
     const {tagContext, setTagContext} = useContext(TagContext);
     const {transactions, setTransactions} = useContext(TransactionsContext);
 
     const [newRule, setNewRule] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState(tag != null && tag.category != null ? tag.category.code : null)
 
     const [newTagName, setNewTagName] = useState('')
     const [newTagIcon, setNewTagIcon] = useState('')
+
+    const [addModalVisible, setAddModalVisible] = useState(false)
+
+    const tagIconUrl = 'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/new_label/default/48px.svg'
 
     if (tag == null) {
         return null
@@ -33,38 +38,29 @@ export default function TagDetails({tag, setTag}) {
     }
 
     const addTag = async () => {
-       axios
-           .put(
-               Config.Endpoints.Tags,
-               {
-                   name: newTagName,
-                   icon: newTagIcon,
-                   parentTag: tag.id
-               },
-               { headers: authContext.header() }
-           )
-           .then()
-           .catch(error => console.log(error))
+        if (newTagIcon === '' || newTagName === '') { return }
+        Repository.addTag(authContext,
+            {
+                name: newTagName,
+                icon: newTagIcon,
+                parentTag: tag.id
+            })
     }
 
     const addRule = async () => {
-        if (newRule.length > 0 && tag.rules.filter(rule => rule.expression == newRule).length == 0) {
+        if (newRule.length > 0 && tag.rules.filter(rule => rule.expression === newRule).length === 0) {
             setTag({...tag, rules: tag.rules.concat([{expression: newRule}])})
-            axios
-                .put(
-                    Config.Endpoints.Rules,
-                    {
-                        tagId: tag.id,
-                        expression: newRule,
-                    },
-                    { headers: authContext.header()}
-                )
-                .then((response) => {
+            Repository.addRule(authContext,
+                {
+                    tagId: tag.id,
+                    expression: newRule,
+                })
+        }
+    }
 
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+    const setTagCategory = async (code) => {
+        if (code != null) {
+            Repository.setTagCategory(authContext, tag.id, code)
         }
     }
 
@@ -87,8 +83,10 @@ export default function TagDetails({tag, setTag}) {
 
     const newTagInputRow =
         <div className="newTag inputRow">
-            <input placeholder='Name' onChange={e => setNewTagName(e.target.value)}/>
-            <input placeholder='Icon' onChange={e => setNewTagIcon(e.target.value)}/>
+            <div className="column">
+                <input placeholder='Name' onChange={e => setNewTagName(e.target.value)}/>
+                <input placeholder='Icon' onChange={e => setNewTagIcon(e.target.value)}/>
+            </div>
             <button className='hover' onClick={addTag}>
                 <Icon name='add'/>
             </button>
@@ -105,8 +103,33 @@ export default function TagDetails({tag, setTag}) {
 
     const subTags =
         <div className="card">
-            <h2>Sub Tags</h2>
-            { newTagInputRow }
+            <div className="row">
+                <h2>Sub Tags</h2>
+                <div className="spacer"/>
+                <button onClick={() =>  {setAddModalVisible(true);console.log(addModalVisible)}}><Icon name="add" /></button>
+                <Modal visible={addModalVisible} setVisible={setAddModalVisible}>
+                    <div className="tagHeader">
+                        <img src={newTagIcon.includes('.svg') ? newTagIcon : tagIconUrl}/>
+                        <h2>{newTagName === '' ? 'New Tag': newTagName}</h2>
+                    </div>
+                    <input placeholder='Name' onChange={e => setNewTagName(e.target.value)}/>
+                    <input placeholder='Icon' onChange={e => setNewTagIcon(e.target.value)}/>
+                    <div className="row">
+                        <div className="spacer"/>
+                        <button className='hover negative' onClick={() => {
+                            setAddModalVisible(false)
+                            setNewTagName('')
+                            setNewTagIcon('')
+                        }}>
+                            <Icon name='close'/>
+                        </button>
+                        <button className='hover positive' onClick={addTag}>
+                            <Icon name='done'/>
+                        </button>
+                    </div>
+
+                </Modal>
+            </div>
             <TagList tags={tag.childTags} includeSubTags={false} editable={true} tagOnClick={(event, newTag) => setTag(newTag)}/>
         </div>
 
@@ -121,6 +144,19 @@ export default function TagDetails({tag, setTag}) {
             <TransactionList transactions={filterTransactions(transactions)}/>
         </div>
 
+    const categoryOptions = categories != null ? categories.map(category => <option value={category.code}>{category.name}</option>) : [];
+
+    const categorySelect =
+        <div className="card">
+            { tag.category != null && <div className="chip primary padding"><p>{tag.category.name}</p></div> }
+            <select value={selectedCategory} onChange={event => {
+                setSelectedCategory(event.target.value);
+                setTagCategory(event.target.value);
+            }}>
+                <option value={null}>Category</option>
+                {categoryOptions}
+            </select>
+        </div>
 
     return (
         <div className="tagDetails">
@@ -131,6 +167,7 @@ export default function TagDetails({tag, setTag}) {
                     <div className="spacer"/>
                     <button className="minimal" onClick={back}><Icon name="arrow_back_ios_new"/></button>
                 </div>
+                { hasSubTags && categorySelect}
                 { hasSubTags && subTags}
                 { ruleList }
             </div>

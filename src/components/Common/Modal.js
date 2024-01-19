@@ -1,16 +1,12 @@
 import React, {useContext} from "react";
-import './Transactions.css'
-import {motion} from "framer-motion";
-import {TagContext} from "./Transactions";
 
-
-export default function Modal(props) {
-
-    const {tagContext, setTagContext} = useContext(TagContext);
+export default function Modal({children, visible, setVisible}) {
 
     return (
-        <div className={`modal__background ${tagContext.tagModalVisible ? '': 'hidden'}`} onClick={() => setTagContext({...tagContext, tagModalVisible: false})}>
-            {children}
+        <div className={`modal__background ${visible ? '': 'hidden'}`} onClick={() => setVisible(false)}>
+            <div className="modal" onClick={event => event.stopPropagation()}>
+                {children}
+            </div>
         </div>
     )
 

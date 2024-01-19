@@ -1,11 +1,11 @@
 class TagContext {
     filter;
     tags;
-    selectedTransaction;
+    selectedTransactions;
     constructor() {
         this.filter = '';
         this.tags = [];
-        this.selectedTransaction = null;
+        this.selectedTransactions = [];
     }
 
 }

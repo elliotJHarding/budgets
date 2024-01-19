@@ -13,4 +13,5 @@
     --card-border-radius: 20px;
     --positive: rgba(119, 221, 119, 0.6);
     --negative: rgba(255, 105, 97, 0.6);
+    --disabled: #CCCCCC
 }

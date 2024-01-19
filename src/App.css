@@ -5,7 +5,11 @@
     --font-family: 'Montserrat';
 }
 
-input, button, .response {
+p {
+    margin: 0;
+}
+
+input, button, .response, select {
     background-color: var(--backdrop);
     border-radius: 5px;
     padding: 0.8rem;
@@ -37,7 +41,11 @@ button.minimal:hover {
     border-radius: var(--card-border-radius);
 }
 
-input:focus, button:focus {
+.card.less-padding {
+    padding: 1rem;
+}
+
+input:focus, button:focus, select:focus {
     border-radius: 20px;
     border-color: var(--secondary);
     outline: none;
@@ -128,7 +136,7 @@ a {
 
 .modal__background {
     backdrop-filter: blur(10px);
-    position: absolute;
+    position: fixed;
     opacity: 1;
     top: 0;
     left: 0;
@@ -138,6 +146,7 @@ a {
     justify-content: center;
     align-items: center;
     transition: all 200ms ease-in-out;
+    z-index: 100;
 }
 
 .modal {
@@ -146,8 +155,21 @@ a {
     box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
     border-radius: var(--card-border-radius);
     opacity: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     transition: opacity 200ms ease-in-out;
+}
+
+.modal .title {
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.modal button {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .hidden {
@@ -161,9 +183,11 @@ a {
 
 .row {
     display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
     align-items: center;
+}
+
+.gap {
+    gap: 1rem;
 }
 
 div::-webkit-scrollbar {
@@ -188,7 +212,7 @@ div::-webkit-scrollbar {
 
 .page {
     height: 100%;
-    padding-top: 3rem;
+    padding-top: 1.5rem;
     box-sizing: border-box;
 }
 
@@ -213,4 +237,85 @@ div::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.chip {
+    padding: 0.3rem 1rem 0.3rem 0.5rem;
+    border-radius: 999px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.chip.giving {
+    background-color: #f3cd57;
+}
+
+.chip.savings {
+    background-color: #A7C7E7;
+}
+
+.chip.investments {
+    background-color: #C3B1E1;
+}
+
+.chip p {
+    margin: 0;
+    font-weight: bolder;
+}
+
+.chip.big p {
+    font-size: 1.5em;
+}
+
+.padding {
+    padding: 1rem;
+}
+
+.yearPicker {
+    padding: 1rem;
+    font-size: 3em;
+}
+
+.yearPicker div {
+    cursor: pointer;
+}
+
+table.rounded td:first-child {
+    border-radius: var(--card-border-radius) 0 0 var(--card-border-radius);
+}
+
+table.rounded td:last-child {
+    border-radius: 0 var(--card-border-radius) var(--card-border-radius) 0;
+}
+
+table
+{
+    border-collapse:separate;
+    border-spacing:0 1rem;
+}
+
+.chart {
+    height: 350px;
+    z-index: 2;
+}
+
+.chart.income {
+    position: absolute;
+    top: 95px;
+    z-index: 1;
+}
+
+@media  (max-width: 2200px) {
+    .monthly-report p {
+        font-size: 8pt;
+    }
+
+    .monthly-report {
+        width: 80px;
+    }
+
+    .chart {
+        height: 150px;
+    }
 }

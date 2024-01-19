@@ -34,20 +34,19 @@ export default function RuleItem({rule}) {
         setTagContext(newTagContext);
 
         axios
-            .patch(
-                Config.Endpoints.Rules,
-                {
-                    tagId: rule.id
-                },
-                {headers: authContext.header()}
-            )
+            .request({
+                url: Config.Endpoints.Rules,
+                method: 'delete',
+                data: { ruleId: rule.id },
+                headers: authContext.header()
+            })
             .then()
             .catch(error => console.log(error))
 
     }
 
     return (
-        <div className="rule row">
+        <div className="rule row gap">
             <Icon name="tune"/>
             <p>{rule.expression}</p>
             <div className="spacer"/>

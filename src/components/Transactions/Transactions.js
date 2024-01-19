@@ -1,13 +1,12 @@
 import React, {Component, createContext, useContext, useEffect, useState} from "react";
 import './Transactions.css'
-import axios, {create} from "axios";
 import {AuthContext} from "../Auth/AuthContext";
-import Config from "../../Config";
 import TransactionList from "./TransactionList";
 import {useNavigate} from "react-router-dom";
 import AccountList from "../Accounts/AccountList";
 import TransactionFilter from "./TransactionFilter";
 import Tags from "../Tag/Tags";
+import {Repository} from "../../Repository";
 
 export const FilterContext = createContext();
 export const TagContext = createContext();
@@ -33,17 +32,17 @@ export default function Transactions(props) {
     const [tagContext, setTagContext] = useState({
         filter: '',
         tags: [],
-        selectedTransaction: null
+        holidays: [],
+        selectedTransactions:[]
     })
 
     const navigate = useNavigate();
 
-    const token = authContext.token
     const authorized = authContext.authorized()
 
     const filterTransactions = (transactionList) => {
         let result = [];
-        let links = transactionList.filter(transaction => transaction.itemType == 'LINK')
+        let links = transactionList.filter(transaction => transaction.itemType === 'LINK')
         let linkedTransactions = []
         links.forEach((link) => {
             linkedTransactions.push(link.fromTransactionId)
@@ -56,8 +55,8 @@ export default function Transactions(props) {
             result = result.filter(transaction => filter.activeAccounts.includes(transaction.accountId))
         }
 
-        if (filter.reference != '') {
-            result = result.filter(transaction => transaction.reference.includes(filter.reference))
+        if (filter.reference !== '') {
+            result = result.filter(transaction => transaction.reference.includes(filter.reference) || (transaction.tag != null && transaction.tag.name.toLowerCase() === filter.reference.toLowerCase()))
         }
 
         result = result.filter(transaction => {
@@ -77,24 +76,8 @@ export default function Transactions(props) {
             { return true } else { return false}
         })
         result = result.filter(transaction => !linkedTransactions.includes(transaction.transactionId))
-        result = result.sort((a, b) => new Date(b.bookingDateTime).getTime() - new Date(a.bookingDateTime).getTime())
+        result = result.sort((a, b) => a.bookingDateTime !== b.bookingDateTime ? new Date(b.bookingDateTime).getTime() - new Date(a.bookingDateTime).getTime(): a.id - b.id)
         return result;
-    }
-
-    const getTransactionData = async () => {
-        axios
-            .get(
-                Config.Endpoints.Transactions.get,
-                { headers: { Authorization: `Token ${token}`}}
-            )
-            .then((response) => {
-                setTransactions(transformTransactionData(response.data))
-                setAccounts(response.data.accounts)
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
     }
 
     const transformTransactionData = (transactionData) => {
@@ -112,19 +95,23 @@ export default function Transactions(props) {
 
         transactionData.links.forEach((link) => {
             link.itemType = 'LINK'
-            link.from_logo = transactionData.accounts.find(account => account.accountId == link.fromAccountId).logo
-            link.to_logo = transactionData.accounts.find(account => account.accountId == link.toAccountId).logo
+            link.from_logo = transactionData.accounts.find(account => account.accountId === link.fromAccountId).logo
+            link.to_logo = transactionData.accounts.find(account => account.accountId === link.toAccountId).logo
             transactions.push(link)
         })
 
-        setTagContext({...tagContext, tags: transactionData.tags})
+        setTagContext({...tagContext, tags: transactionData.tags, holidays: transactionData.holidays})
 
         return transactions
     }
 
     useEffect(() => {
         if(authorized) {
-           getTransactionData()
+            Repository.getTransactions(authContext, (response) => {
+                setTransactions(transformTransactionData(response.data))
+                setAccounts(response.data.accounts)
+                setLoading(false)
+            });
         } else {
             navigate("/")
         }
@@ -142,7 +129,7 @@ export default function Transactions(props) {
                        <div className="filters">
                            <TransactionFilter/>
                            <input placeholder="Search Transactions" className="transaction-search" onChange={e => setFilter({...filter, reference: e.target.value})}/>
-                           <TransactionList loading={loading} transactions={filterTransactions(transactions)}/>
+                           <TransactionList loading={loading} transactions={filterTransactions(transactions)} setTransactions={setTransactions}/>
                        </div>
                    </TransactionsContext.Provider>
                </TagContext.Provider>

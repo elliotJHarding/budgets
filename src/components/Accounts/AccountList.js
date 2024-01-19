@@ -4,16 +4,16 @@ import Account from "./Account";
 import {motion} from "framer-motion";
 import {BarLoader} from "react-spinners";
 
-export default function AccountList(props) {
+export default function AccountList({loading, accounts}) {
 
-    const accountItems = props.accounts.map((account) => {
+    const accountItems = accounts.map((account) => {
         return (<Account key={account.id} account={account}/>)
     })
 
     return (
         <motion.div layout className="accountList-container">
             <div className="accountList">
-                <BarLoader className="loader" loading={props.loading}/>
+                <BarLoader className="loader" loading={loading}/>
                 {accountItems}
             </div>
         </motion.div>

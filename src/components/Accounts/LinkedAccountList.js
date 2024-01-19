@@ -10,10 +10,9 @@ export default function LinkedAccountList({accounts, updateAction}) {
     })
 
     return (
-        <motion.div layout='position' className="accountList-container">
+        <motion.div layout='position' className="accountList-container column gap">
             <p>Linked Accounts</p>
-            <div className="linkedAccountList">
-                {accountItems}
+            <div className="row gap">
                 <Link to="/bankselect">
                     <div className="add-account">
                         <span className="material-symbols-outlined">add</span>
@@ -25,6 +24,9 @@ export default function LinkedAccountList({accounts, updateAction}) {
                     <p>Update</p>
                 </div>
             </div>
+            <table className="linkedAccountList rounded">
+                {accountItems}
+            </table>
         </motion.div>
     )
 }

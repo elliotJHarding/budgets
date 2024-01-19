@@ -1,17 +1,14 @@
 import React, {useContext, useState} from "react";
 import ChildTag from "./ChildTag";
 import Icon from "../Common/Icon";
-import axios from "axios";
-import Config from "../../Config";
 import {AuthContext} from "../Auth/AuthContext";
-import {FilterContext, TagContext} from "../Transactions/Transactions";
-import {motion} from "framer-motion";
+import {TagContext} from "../Transactions/Transactions";
+import {Repository} from "../../Repository";
 
 
 export default function TagItem({tag, tagOnClick, tagOnDoubleClick, filter, includeSubTags, editable}) {
 
     const {authContext, setAuthContext} = useContext(AuthContext);
-    const {tagContext, setTagContext} = useContext(TagContext);
 
     const [editMode, setEditMode] = useState(false);
 
@@ -25,22 +22,13 @@ export default function TagItem({tag, tagOnClick, tagOnDoubleClick, filter, incl
 
     const edit = async (event) => {
         event.stopPropagation();
-        axios
-            .patch(
-                Config.Endpoints.Tags,
-                {
-                    tagId: tag.id,
-                    name: newName,
-                    icon: newIcon
-                },
-                {headers: authContext.header()}
-            )
-            .then((response) => {
-                setEditMode(false)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        Repository.editTag(authContext,
+            {
+                tagId: tag.id,
+                name: newName,
+                icon: newIcon
+            },
+            () => setEditMode(false))
     }
 
     const cancel = (event) => {

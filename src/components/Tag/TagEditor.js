@@ -2,12 +2,12 @@ import React, {useContext, useEffect, useState} from "react";
 import TagList from "./TagList";
 import {FilterContext, TagContext, TransactionsContext} from "../Transactions/Transactions";
 import './Tag.css'
-import axios from "axios";
-import Config from "../../Config";
 import {AuthContext} from "../Auth/AuthContext";
 import TagDetails from "./TagDetails";
 import Icon from "../Common/Icon";
 import {motion} from "framer-motion";
+import Modal from "../Common/Modal";
+import {Repository} from "../../Repository";
 
 export default function TagEditor(props) {
     const {authContext, setAuthContext} = useContext(AuthContext);
@@ -15,8 +15,13 @@ export default function TagEditor(props) {
     const [tagContext, setTagContext] = useState({
         filter: '',
         tags: [],
-        selectedTransaction: null
+        selectedTransactions: [],
+
     })
+
+    const [categories, setCategories] = useState([])
+
+    const [filter, setFilter] = useState({})
 
     const [transactions, setTransactions] = useState([])
 
@@ -24,48 +29,15 @@ export default function TagEditor(props) {
 
     const [newTagName, setNewTagName] = useState('')
     const [newTagIcon, setNewTagIcon] = useState('')
-
+    const [addModalVisible, setAddModalVisible] = useState(false)
+    const tagIconUrl = 'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/new_label/default/48px.svg'
 
     const addTag = async () => {
-        axios
-            .put(
-                Config.Endpoints.Tags,
-                {
-                    name: newTagName,
-                    icon: newTagIcon
-                },
-                { headers: authContext.header() }
-            )
-            .then()
-            .catch(error => console.log(error))
-    }
-
-    const loadTags = async () => {
-        axios
-            .get(
-                Config.Endpoints.Tags,
-                {headers: authContext.header()}
-            )
-            .then((response) => {
-                setTagContext({...tagContext, tags: response.data.tags})
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    const loadTransactions = async () => {
-        axios
-            .get(
-                Config.Endpoints.Transactions.get,
-                {headers: authContext.header()}
-            )
-            .then((response) => {
-                setTransactions(transformTransactionData(response.data))
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        if (newTagIcon === '' || newTagName === '') { return }
+        Repository.addTag(authContext, {
+            name: newTagName,
+            icon: newTagIcon
+        })
     }
 
     const transformTransactionData = (transactionData) => {
@@ -91,39 +63,62 @@ export default function TagEditor(props) {
         return transactions
     }
 
-    const getParentTags = (tags) => tags.map(tag => {return({...tag, childTags: []})})
+    useEffect(() => {
+        Repository.loadTags(authContext, (response) => {
+            setTagContext({...tagContext, tags: response.data.tags})
+            setCategories(response.data.categories)
+        })
+        Repository.getTransactions(authContext, (response) => {
+            setTransactions(transformTransactionData(response.data))
+        })
+    }, [])
 
+    return (
+        <motion.div layout="position" className="page tags">
+            <TagContext.Provider value={{tagContext, setTagContext}}>
+                <FilterContext.Provider value={{filter, setFilter}}>
 
-   useEffect(() => {
-       loadTags();
-       loadTransactions();
-   }, [])
+                    <div className="card scroll">
+                        <div className="row">
+                            <h1>Tags</h1>
+                            <div className="spacer"/>
+                            <button onClick={() => setAddModalVisible(true)}><Icon name='add'/></button>
+                            <Modal visible={addModalVisible} setVisible={setAddModalVisible}>
+                                <div className="tagHeader">
+                                    <img src={newTagIcon.includes('.svg') ? newTagIcon : tagIconUrl}/>
+                                    <h2>{newTagName === '' ? 'New Tag' : newTagName}</h2>
+                                </div>
+                                <input placeholder='Name' onChange={e => setNewTagName(e.target.value)}/>
+                                <input placeholder='Icon' onChange={e => setNewTagIcon(e.target.value)}/>
+                                <div className="row">
+                                    <div className="spacer"/>
+                                    <button className='hover negative' onClick={() => {
+                                        setAddModalVisible(false)
+                                        setNewTagName('')
+                                        setNewTagIcon('')
+                                    }}>
+                                        <Icon name='close'/>
+                                    </button>
+                                    <button className='hover positive' onClick={addTag}>
+                                        <Icon name='done'/>
+                                    </button>
+                                </div>
+                            </Modal>
+                        </div>
+                        <TagList tags={tagContext.tags}
+                                 editable={true}
+                                 tagOnClick={(event, tag) => {
+                                     setSelectedTag(tag)
+                                 }}/>
+                    </div>
 
-   return (
-      <motion.div layout="position" className="page tags">
-         <TagContext.Provider value={{tagContext, setTagContext}}>
+                    <TransactionsContext.Provider value={{transactions, setTransactions}}>
+                        <TagDetails tag={selectedTag} setTag={setSelectedTag} categories={categories}/>
+                    </TransactionsContext.Provider>
 
-             <div className="card scroll">
-                 <h1>Tags</h1>
-                 <div className="newTag inputRow">
-                     <input placeholder='Name' onChange={e => setNewTagName(e.target.value)}/>
-                     <input placeholder='Icon' onChange={e => setNewTagIcon(e.target.value)}/>
-                     <button className='hover' onClick={addTag}>
-                         <Icon name='add'/>
-                     </button>
-                 </div>
-                 <TagList tags={tagContext.tags}
-                          editable={true}
-                          tagOnClick={(event, tag) => {
-                              setSelectedTag(tag)
-                          }}/>
-             </div>
-             <TransactionsContext.Provider value={{transactions, setTransactions}}>
-                 <TagDetails tag={selectedTag} setTag={setSelectedTag}/>
-             </TransactionsContext.Provider>
-
-         </TagContext.Provider>
-   </motion.div>
-   )
+                </FilterContext.Provider>
+            </TagContext.Provider>
+        </motion.div>
+    )
 
 }

@@ -1,0 +1,108 @@
+
+.tabs {
+    display: flex;
+}
+
+.tab {
+    padding: 1rem;
+    /*border-radius: var(--card-border-radius);*/
+    transition: background-color 200ms ease-out, color 200ms ease-out;
+    cursor: pointer;
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    position: relative;
+    text-align: center;
+}
+
+.tab:hover {
+    background-color: var(--background);
+}
+
+.tab.selected {
+    color: var(--secondary)
+}
+
+.tab::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 3px;
+    border-radius: 2px 2px 0 0;
+    background-color: var(--secondary);
+    transform: translate(-50%, 0);
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.tab.selected::after {
+    opacity: 1;
+}
+
+.reports hr {
+    margin: 0;
+}
+
+.report {
+    background-color: var(--background);
+    padding: 0 2rem 2rem 2rem;
+    border-radius: var(--card-border-radius);
+}
+
+
+.monthly-report {
+    background: var(--primary);
+    padding: 1rem;
+    border-radius: var(--card-border-radius);
+    width: 125px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.monthly-reports {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.monthly-report p {
+    margin: 0;
+    font-weight: bold;
+
+}
+
+.monthly-report.disabled {
+    /*background-color: var(--disabled);*/
+    filter: grayscale(90%);
+}
+
+/*.monthly-report:not(.currentMonth)::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top: -15px;*/
+/*    left: 50%;*/
+/*    width: 20px;*/
+/*    height: 3px;*/
+/*    border-radius: 999px;*/
+/*    background-color: var(--secondary);*/
+/*    transform: translate(-50%, 50%);*/
+/*    opacity: 1;*/
+/*    transition: opacity 200ms ease-in-out;*/
+/*}*/
+
+.monthly-report.currentMonth::after {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    width: 30px;
+    height: 10px;
+    border-radius: 999px;
+    background-color: var(--secondary);
+    transform: translate(-50%, 0);
+    opacity: 1;
+    transition: opacity 200ms ease-in-out;
+
+}
+

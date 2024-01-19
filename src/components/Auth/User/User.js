@@ -1,11 +1,9 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import './User.css'
-import Config from "../../../Config";
-import axios from "axios";
 import {AuthContext} from "../AuthContext";
-import {redirect, useNavigate, useNavigation, useSearchParams} from "react-router-dom";
-import NavBar from "../../NavBar/NavBar";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import LinkedAccountList from "../../Accounts/LinkedAccountList";
+import {Repository} from "../../../Repository";
 
 
 export default function User() {
@@ -20,79 +18,27 @@ export default function User() {
     const authorized = authContext.authorized();
 
     const updateAccounts = async () => {
-        axios
-            .get(
-                Config.Endpoints.UpdateAccounts,
-                {
-                    headers:authContext.header()
-                }
-            )
-            .then(response => {
-               navigate('/user')
-            })
-    }
-
-    const updateRequisition = async (clientReference) => {
-        axios({
-            method: 'PATCH',
-            url: Config.Endpoints.Requisition,
-            headers: authContext.header(),
-            data: {"clientRef": clientReference, "status": "ACTIVE"}
+        Repository.updateAccounts(authContext, response => {
+            navigate('/user')
         })
-        .then(response => {
-            console.log(`Successfully updated requisition with id: ${clientReference}`)
-            updateAccounts()
-        })
-        .catch(error => {
-            console.log(`Error updating requisition with id: ${clientReference}`)
-            console.log(error)
-        })
-    }
-
-    const deleteRequisition = async (clientReference) => {
-        axios({
-            method: 'DELETE',
-            url: Config.Endpoints.Requisition,
-            headers: authContext.header(),
-            data: {clientRef: clientReference}
-        })
-        .then(response => console.log(`Successfully deleted requisition with id: ${clientReference}`))
-        .catch(error => {
-            console.log(`Error deleting requisition with id: ${clientReference}`)
-            console.log(error)
-        })
-    }
-
-    const getProfileData = async () => {
-       axios
-           .get(
-               Config.Endpoints.ProfileData,
-               {
-                   headers: authContext.header()
-               }
-           )
-           .then(response => {
-               setFirstName(response.data.firstName)
-               setLastName(response.data.lastName)
-               setLinkedAccounts(response.data.accounts)
-           })
-           .catch((error) => {
-               console.log(error)
-           });
     }
 
     useEffect(() => {
         console.log(authContext)
         if (authorized) {
-            getProfileData()
+            Repository.getProfileData(authContext, response => {
+                setFirstName(response.data.firstName)
+                setLastName(response.data.lastName)
+                setLinkedAccounts(response.data.accounts)
+            })
 
             let ref = searchParams.get("ref")
             if (ref != null) {
                 let error = searchParams.get("error")
-                if (error != null && error == 'UserCancelledSession') {
-                    deleteRequisition(ref)
+                if (error != null && error === 'UserCancelledSession') {
+                    Repository.deleteRequisition(authContext, ref)
                 } else {
-                    updateRequisition(ref)
+                    Repository.updateRequisition(authContext, ref, () => updateAccounts())
                 }
             }
 
@@ -102,7 +48,7 @@ export default function User() {
     }, [])
 
     return (
-        <div>
+        <div className="page column gap">
             <h1>Hello {firstName} {lastName}</h1>
             <LinkedAccountList accounts={linkedAccounts} updateAction={updateAccounts}/>
         </div>

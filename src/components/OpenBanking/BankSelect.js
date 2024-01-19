@@ -5,6 +5,7 @@ import {AuthContext} from "../Auth/AuthContext";
 import {useNavigate} from "react-router-dom";
 import Bank from "./Bank";
 import BankGrid from "./BankGrid";
+import {Repository} from "../../Repository";
 
 export default function BankSelect(props) {
     const {authContext, setAuthContext} = useContext(AuthContext)
@@ -17,46 +18,16 @@ export default function BankSelect(props) {
     const [selected, setSelected] = useState(null);
 
     const createRequisition = async () => {
-        axios
-            .post(
-                Config.Endpoints.Requisition,
-                {
-                    "bankCode": selected.code
-                },
-                {
-                    headers: {
-                        Authorization: `Token ${token}`
-                    }
-                }
-            )
-            .then(response => {
-                window.location.href = response.data.link
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
-    const getBanks = async () => {
-        axios
-            .get(
-                Config.Endpoints.Banks,
-                {
-                    headers: {
-                        Authorization: `Token ${token}`
-                }
-            })
-            .then(response => {
-                setBanks(response.data.institutions)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        Repository.createRequisition(selected.code, authContext, response => {
+            window.location.href = response.data.link
+        })
     }
 
     useEffect(() => {
         if (authorized) {
-            getBanks()
+            Repository.getBanks(authContext, response => {
+                setBanks(response.data.institutions)
+            })
         } else {
             navigate('/login')
         }
@@ -64,7 +35,7 @@ export default function BankSelect(props) {
 
     return(
         <div className="page">
-            {selected != null ? <div className="row"><img className="logo" src={selected.logo}/><h1>{selected.name}</h1><div style={{flexGrow: 1}}/><button onClick={() => createRequisition()}>Next</button></div> : <h1>Select a Bank</h1>}
+            {selected != null ? <div className="row"><img className="logo" src={selected.logo}/><h1>{selected.name}</h1><div style={{flexGrow: 1}}/><button onClick={createRequisition}>Next</button></div> : <h1>Select a Bank</h1>}
             <BankGrid banks={banks} selectedBank={selected} setSelected={setSelected}/>
         </div>
     )
