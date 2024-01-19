@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ "release" ]
 
+env:
+  CI: ""
+
 jobs:
   build:
 
