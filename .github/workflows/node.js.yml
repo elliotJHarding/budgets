@@ -5,14 +5,17 @@ name: Deploy React App
 
 on:
   push:
-    branches: [ "Release" ]
+    branches: [ "release" ]
   pull_request:
-    branches: [ "Release" ]
+    branches: [ "release" ]
+
+env:
+  CI: ""
 
 jobs:
   build:
 
-    runs-on: [linux, X64]
+    runs-on: [self-hosted, linux, X64]
 
     strategy:
       matrix:
@@ -26,6 +29,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm install
     - run: npm run build --if-present
     - run: serve build
