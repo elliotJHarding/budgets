@@ -1,7 +1,7 @@
 const Config = {};
 
 Config.Endpoints = {}
-Config.Endpoints.Domain = process.env.BACKEND_URL
+Config.Endpoints.Domain = process.env.REACT_APP_BACKEND_URL
 const domain = Config.Endpoints.Domain
 Config.Endpoints.CreateUser = `${domain}/auth/createuser`
 Config.Endpoints.CSRF = `${domain}/auth/csrf`
