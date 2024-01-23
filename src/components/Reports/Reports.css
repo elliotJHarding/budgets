@@ -44,16 +44,19 @@
 
 .report {
     background-color: var(--background);
-    padding: 0 2rem 2rem 2rem;
     border-radius: var(--card-border-radius);
+    padding: 1rem;
+}
+
+.report span {
+    font-size: 13pt;
 }
 
 
 .monthly-report {
     background: var(--primary);
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     border-radius: var(--card-border-radius);
-    width: 125px;
     position: relative;
     display: flex;
     flex-direction: column;
