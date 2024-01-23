@@ -17,6 +17,7 @@ import BankSelect from "./components/OpenBanking/BankSelect";
 import TagEditor from "./components/Tag/TagEditor";
 import Budgets from "./components/Budgets/Budgets";
 import Holidays from "./components/Holidays/Holidays";
+import Home from "./components/Home/Home";
 
 export default App;
 
@@ -27,12 +28,13 @@ function App() {
             { path: "/login", element: <Login/> },
             { path: "/signup", element: <Signup/> },
             { path: "/user", element: <User/>},
-                {path: "/transactions", element: <Transactions/>},
-                {path: "/reports", element: <Reports/>},
-                {path: "/bankselect", element: <BankSelect/>},
-                {path: "/tags", element: <TagEditor/>},
-                {path: "/budgets", element: <Budgets/>},
-                {path: "/holidays", element: <Holidays/>}
+            { path: "/transactions", element: <Transactions/>},
+            { path: "/reports", element: <Reports/>},
+            { path: "/bankselect", element: <BankSelect/>},
+            { path: "/tags", element: <TagEditor/>},
+            { path: "/budgets", element: <Budgets/>},
+            { path: "/holidays", element: <Holidays/>},
+            { path: "/", element: <Home/>}
         ]}
     ])
 

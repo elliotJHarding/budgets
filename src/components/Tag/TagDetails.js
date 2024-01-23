@@ -160,16 +160,18 @@ export default function TagDetails({tag, setTag, categories}) {
 
     return (
         <div className="tagDetails">
-            <div className="column">
+            <div className="column gap">
                 <div className="tagHeader card">
                     <img src={tag.icon}/>
                     <h1>{tag.name}</h1>
                     <div className="spacer"/>
                     <button className="minimal" onClick={back}><Icon name="arrow_back_ios_new"/></button>
                 </div>
-                { hasSubTags && categorySelect}
-                { hasSubTags && subTags}
-                { ruleList }
+                <div className="tag-settings scroll column gap">
+                    { hasSubTags && categorySelect}
+                    { hasSubTags && subTags}
+                    { ruleList }
+                </div>
             </div>
             { matchingTransactions }
         </div>

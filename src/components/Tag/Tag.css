@@ -237,3 +237,7 @@ h2 {
 .rule p {
     margin: 0;
 }
+
+.tag-settings {
+    overflow: scroll;
+}

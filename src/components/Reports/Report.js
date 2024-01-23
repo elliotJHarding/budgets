@@ -1,13 +1,16 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import './Reports.css'
 import MonthlyReport from "./MonthlyReport";
 import Months from "../../domain/Months";
 import {ResponsiveStream} from '@nivo/stream'
+import Breakdown from "./Breakdown";
 export default function Report({report}) {
-
 
     const monthlyReports = Months.monthList.map(month =>
         <MonthlyReport month={month} report={month in report ? report[month]: null}/>);
+
+    // const [selectedReport, setSelectedReport] = useState(report)
+    const selectedReport = report
 
     const data = Months.monthList.map(month => {
         let hasData = month in report
@@ -48,7 +51,7 @@ export default function Report({report}) {
                     <ResponsiveStream
                         data={data}
                         keys={["Spend", "Giving", "Savings", "Investments", "Income"]}
-                        margin={{ top: 50, right: 80, bottom: 10, left: 80 }}
+                        margin={{ top: 10, right: 60, bottom: 10, left: 60 }}
                         axisTop={null}
                         axisRight={null}
                         axisBottom={null}
@@ -122,7 +125,7 @@ export default function Report({report}) {
                     {monthlyReports}
                 </div>
             </div>
-            
+            <Breakdown report={selectedReport}/>
         </div>
 )
 }
