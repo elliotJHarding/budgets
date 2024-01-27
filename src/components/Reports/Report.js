@@ -62,7 +62,7 @@ export default function Report({report}) {
                             tickRotation: 0,
                             legend: '',
                             legendOffset: -40,
-                            format: (value) => (`£${Number(value)}`)
+                            format: (value) => (`£${Number(value)}`),
                         }}
                         enableGridX={true}
                         enableGridY={false}
@@ -71,6 +71,7 @@ export default function Report({report}) {
                         colors={["rgba(255, 105, 97, 0.6)","#f3cd57", "#A7C7E7", "#C3B1E1", "rgba(119, 221, 119, 0.6)" ]}
                         fillOpacity={0.85}
                         borderColor={{ theme: 'background' }}
+                        valueFormat={(value) => (`£${Number(value).toFixed(2)}`)}
                         defs={[
                             {
                                 id: 'dots',
