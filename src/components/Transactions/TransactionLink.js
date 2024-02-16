@@ -1,18 +1,19 @@
 import React from "react";
 import './Transactions.css'
 import {motion} from "framer-motion";
+import AccountLogo from "../Accounts/AccountLogo";
 
 
-export default function TransactionLink(props) {
+export default function TransactionLink({link}) {
     const arrow = "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/chevron_right/default/48px.svg"
     return (
-        <div key={props.link.id} className="transaction link">
-            <img className="logo" src={props.link.from_logo}/>
+        <div key={link.id} className="transaction link">
+            <AccountLogo url={link.from_logo} colour={link.from_colour}/>
             <img src={arrow}/>
-            <img className="logo" src={props.link.to_logo}/>
-            <p>{props.link.reference}</p>
+            <AccountLogo url={link.to_logo} colour={link.to_colour}/>
+            <p>{link.reference}</p>
             <div className="spacer"></div>
-            <p className={`value`}>{`£${props.link.amount.toFixed(2)}`}</p>
+            <p className={`value`}>{`£${link.amount.toFixed(2)}`}</p>
         </div>
     )
 }
