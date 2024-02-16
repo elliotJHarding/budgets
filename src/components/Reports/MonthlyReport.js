@@ -1,16 +1,19 @@
 import React, {Component} from "react";
 import './Reports.css'
-import ReportList from "./ReportList";
 import Months from "../../domain/Months";
 import Icon from "../Common/Icon";
 
-export default function MonthlyReport({month, report}) {
+export default function MonthlyReport({month, report, selectedReport, setSelectedReport}) {
 
     const noReport = report == null;
     const noReportText = '----'
 
+    const selected = report !== null && report === selectedReport;
+
+    const handleClick = () => setSelectedReport(selectedReport === report ? null : report);
+
     return (
-        <div className={`monthly-report ${report == null ? 'disabled': '' } ${Months.monthList[new Date().getMonth()] === month ? 'currentMonth' : '' }`}>
+        <div onClick={handleClick} className={`monthly-report ${report == null ? 'disabled': '' } ${selected ? 'selected' : ''} ${Months.monthList[new Date().getMonth()] === month ? 'currentMonth' : '' }`}>
             <div className="row">
                 <p>{month}</p>
                 <div className="spacer"/>

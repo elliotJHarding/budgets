@@ -2,13 +2,11 @@
     background-color: var(--background);
     padding: 2rem;
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     border-radius: var(--card-border-radius);
     flex-wrap: wrap;
     flex-direction: column;
 }
-
-
 
 .linkedAccountList tr {
     border-radius: var(--card-border-radius);
@@ -23,9 +21,6 @@
     margin: 0;
     font-weight: bolder;
     font-size: 14pt;
-}
-
-.accountList-container {
 }
 
 .accountList p {
@@ -47,8 +42,8 @@
 
 .account {
     background-color: var(--backdrop);
-    border-radius: 20px;
-    padding: 1rem;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
     transition: background-color 200ms ease-out, outline-color 200ms ease-out;
     position: relative;
     display: flex;
@@ -91,8 +86,7 @@
 
 .account.disabled {
     background-color: transparent;
-    outline: solid thin;
-    outline-color: var(--contrast);
+    outline: var(--contrast) solid thin;
 }
 
 .account.disabled img, .account.disabled div {

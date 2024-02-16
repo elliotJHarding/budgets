@@ -89,14 +89,19 @@ export default function Transactions(props) {
                 transaction.accountName = account.accountName
                 transaction.bankName = account.bankName
                 transaction.logo = account.logo
+                transaction.colour = account.colour
                 transactions.push(transaction)
             })
            })
 
         transactionData.links.forEach((link) => {
             link.itemType = 'LINK'
-            link.from_logo = transactionData.accounts.find(account => account.accountId === link.fromAccountId).logo
-            link.to_logo = transactionData.accounts.find(account => account.accountId === link.toAccountId).logo
+            let from_account =  transactionData.accounts.find(account => account.accountId === link.fromAccountId)
+            link.from_logo = from_account.logo
+            link.from_colour = from_account.colour
+            let to_account = transactionData.accounts.find(account => account.accountId === link.toAccountId)
+            link.to_logo = to_account.logo
+            link.to_colour = to_account.colour
             transactions.push(link)
         })
 

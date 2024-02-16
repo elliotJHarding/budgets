@@ -4,6 +4,7 @@ import {motion} from "framer-motion";
 import Tag from "../Tag/Tag";
 import {TagContext} from "./Transactions";
 import Icon from "../Common/Icon";
+import AccountLogo from "../Accounts/AccountLogo";
 
 
 export default function Transaction({transaction}) {
@@ -21,7 +22,7 @@ export default function Transaction({transaction}) {
 
     return (
         <div key={transaction.transactionId} className={`transaction ${tagContext.selectedTransactions.includes(transaction.transactionId) ? 'selected' : ''}`} onClick={select}>
-            <img className="logo" src={transaction.logo}/>
+            <AccountLogo url={transaction.logo} colour={transaction.colour}/>
             <p>{transaction.reference}</p>
             {/*<p>{transaction.bookingDateTime}</p>*/}
             <div className="spacer"></div>

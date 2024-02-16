@@ -1,6 +1,7 @@
 import React, {Component, useContext, useEffect, useState} from "react";
 import './Accounts.css'
 import {FilterContext} from "../Transactions/Transactions";
+import AccountLogo from "./AccountLogo";
 
 
 export default function Account({account}) {
@@ -23,7 +24,7 @@ export default function Account({account}) {
         <div className="row gap">
             <div className={`account ${isDisabled() ? 'disabled': ''}`} onClick={accountOnClick}>
                 <div className="info">
-                    <img src={account.logo}/>
+                    <AccountLogo url={account.logo} colour={account.colour}/>
                     <div className="details">
                         <p>{account.name}</p>
                         <p>{account.bankName}</p>

@@ -69,10 +69,8 @@
 }
 
 .navbar__title {
-    margin: 0 0 0 0rem;
+    margin: 0 0 0 0;
     font-size: var(--title-fs);
-    white-space: normal;
-    white-space: nowrap;
 }
 
 .navbar__item {

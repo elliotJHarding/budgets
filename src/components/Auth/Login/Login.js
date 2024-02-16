@@ -19,6 +19,12 @@ export default function Login() {
         visible: false
     })
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            authenticateRequest();
+        }
+    }
+
     const authenticateRequest = async () => {
         axios.post(
             Config.Endpoints.ObtainToken,
@@ -27,20 +33,20 @@ export default function Login() {
                 password: password
             })
             .then((response) => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     setAuthContext(new Auth(response.data.token));
                     navigate("/user");
                 }
             })
             .catch((error) => {
                 console.log(error)
-                if (error.code == "ERR_NETWORK") {
+                if (error.code === "ERR_NETWORK") {
                     setResponse({
                         text: "Server Unavailable",
                         visible: true
                     })
                 }
-                else if (error.response.status == 400) {
+                else if (error.response.status === 400) {
                     setResponse({
                         text: "Invalid Login",
                         visible: true
@@ -52,8 +58,8 @@ export default function Login() {
     return (
         <motion.div layout layoutId="page" className="auth-container">
             <div className="card card-auth">
-                <input type="text" value={username} onInput={e => setUsername(e.target.value)} placeholder="Username"/>
-                <input type="password" value={password} onInput={e => setPassword(e.target.value)} placeholder="Password"/>
+                <input type="text" value={username} onInput={e => setUsername(e.target.value)} placeholder="Username" onKeyPress={handleKeyPress}/>
+                <input type="password" value={password} onInput={e => setPassword(e.target.value)} placeholder="Password" onKeyPress={handleKeyPress}/>
                 <div className="button-group">
                     <button onClick={authenticateRequest}>Login</button>
                     <button className="neutral" onClick={() => {navigate('/signup')}}>Sign Up</button>

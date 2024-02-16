@@ -1,6 +1,6 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import '../Transactions/Transactions.css'
-import {TransactionsContext} from "../Transactions/Transactions";
+import {TagContext, TransactionsContext} from "../Transactions/Transactions";
 import {AuthContext} from "../Auth/AuthContext";
 import {Repository} from "../../Repository";
 
