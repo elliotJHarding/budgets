@@ -6,11 +6,10 @@ import {ResponsiveStream} from '@nivo/stream'
 import Breakdown from "./Breakdown";
 export default function Report({report}) {
 
-    const monthlyReports = Months.monthList.map(month =>
-        <MonthlyReport month={month} report={month in report ? report[month]: null}/>);
+    const [selectedReport, setSelectedReport] = useState(null)
 
-    // const [selectedReport, setSelectedReport] = useState(report)
-    const selectedReport = report
+    const monthlyReports = Months.monthList.map(month =>
+        <MonthlyReport month={month} report={month in report ? report[month]: null} selectedReport={selectedReport} setSelectedReport={setSelectedReport}/>);
 
     const data = Months.monthList.map(month => {
         let hasData = month in report
@@ -126,7 +125,7 @@ export default function Report({report}) {
                     {monthlyReports}
                 </div>
             </div>
-            <Breakdown report={selectedReport}/>
+            <Breakdown report={selectedReport === null ? report : selectedReport}/>
         </div>
 )
 }

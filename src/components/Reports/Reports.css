@@ -73,6 +73,8 @@
     margin: 0;
     font-weight: bold;
 
+    transition: all ease-in-out 200ms;
+
 }
 
 .monthly-report.disabled {
@@ -107,5 +109,11 @@
     opacity: 1;
     transition: opacity 200ms ease-in-out;
 
+}
+
+.monthly-report.selected {
+    outline-color: var(--secondary);
+    outline-width: 2px;
+    outline-style: solid;
 }
 

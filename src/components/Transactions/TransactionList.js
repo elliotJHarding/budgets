@@ -28,6 +28,10 @@ export default function TransactionList({transactions, setTransactions, loading}
     const {authContext, setAuthContext} = useContext(AuthContext);
 
     const [holidayModalVisible, setHolidayModalVisible] = useState(false)
+    const [tagRuleModalVisible, setTagRuleModalVisible] = useState(false)
+
+    const [newRule, setNewRule] = useState('')
+    const [newRuleTag, setNewRuleTag] = useState(null)
 
     const [holidayYears, setHolidayYears] = useState([])
 
@@ -88,6 +92,15 @@ export default function TransactionList({transactions, setTransactions, loading}
         return result
     }
 
+    const addRule = () => {
+        Repository.addRule(authContext,
+            {
+                tagId: newRuleTag,
+                expression: newRule,
+            })
+        setTagRuleModalVisible(false)
+    }
+
     const transactionItems =  addDateItems(transactions).map(transactionItem => {
        switch (transactionItem.itemType) {
            case 'TRANSACTION':
@@ -121,7 +134,21 @@ export default function TransactionList({transactions, setTransactions, loading}
                         setTransactionsHoliday(tagContext.selectedTransactions, holiday.id)
                     }}/>
                 </Modal>
-                <button><Icon name="link"/></button>
+                <Modal visible={tagRuleModalVisible} setVisible={setTagRuleModalVisible}>
+                    <input type="text" value={newRule} onChange={(e) => setNewRule(e.target.value)}/>
+                    <select value={newRule} onChange={(e) => setNewRuleTag(e.target.value)}>
+                        {
+                            tagContext.tags
+                            .concat(tagContext.tags.flatMap(t => t.childTags))
+                            .map(tag => <option value={tag.id}>{tag.name}</option>)
+                        }
+                    </select>
+                    <div className="row gap">
+                        <button onClick={addRule}>Add Rule</button>
+                        <button onClick={() => setTagRuleModalVisible(false)}><Icon name="cancel"/></button>
+                    </div>
+                </Modal>
+                <button onClick={() => {setNewRule(''); setTagRuleModalVisible(true)}}><Icon name="more"/></button>
             </div>
             { transactionItems.length > 0 && <div className="transactionList">{transactionItems}</div> }
             { transactionItems.length === 0 && !loading && <p className="noTransactions">No matching transactions...</p> }
